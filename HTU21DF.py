@@ -26,7 +26,7 @@
 # THE SOFTWARE.
 import time
 import pigpio
-import math
+#import math
 
 pi = pigpio.pi()
 
@@ -58,7 +58,8 @@ def read_temperature():
 	t1 = byteArray[0] # most significant byte msb
 	t2 = byteArray[1] # least significant byte lsb
 	temp_reading = (t1 * 256) + t2 # combine both bytes into one big integer
-	temp_reading = math.fabs(temp_reading) # I'm an idiot and can't figure out any other way to make it a float 
+	#temp_reading = math.fabs(temp_reading) # I'm an idiot and can't figure out any other way to make it a float 
+	temp_reading = float(temp_reading) #convert to float this way
 	temperature = ((temp_reading / 65536) * 175.72 ) - 46.85 # formula from datasheet
 	return temperature
 
@@ -71,7 +72,8 @@ def read_humidity():
 	h1 = byteArray[0] # most significant byte msb
 	h2 = byteArray[1] # least significant byte lsb
 	humi_reading = (h1 * 256) + h2 # combine both bytes into one big integer
-	humi_reading = math.fabs(humi_reading) # I'm an idiot and can't figure out any other way to make it a float
+	#humi_reading = math.fabs(humi_reading) # I'm an idiot and can't figure out any other way to make it a float
+	humi_reading = float(humi_reading)
 	uncomp_humidity = ((humi_reading / 65536) * 125 ) - 6 # formula from datasheet
 	# to get the compensated humidity we need to read the temperature
 	temperature = read_temperature()
